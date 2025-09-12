@@ -47,9 +47,15 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
     imageUrls: {
-      type: String,
-      default:
+      type: [String],
+      default: [
+        "https://cdn.pixabay.com/photo/2022/04/06/22/58/street-7116489_1280.jpg",
+        "https://cdn.pixabay.com/photo/2019/02/11/07/37/homes-3988906_1280.jpg",
+        "https://cdn.pixabay.com/photo/2017/07/04/09/06/houses-2470398_1280.jpg",
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+        "https://cdn.pixabay.com/photo/2025/09/05/18/31/cave-9817865_1280.jpg",
+        "https://cdn.pixabay.com/photo/2025/09/08/19/50/ivy-9823003_1280.jpg",
+      ],
     },
     userRef: {
       type: String,
