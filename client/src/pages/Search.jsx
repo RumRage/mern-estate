@@ -62,6 +62,7 @@ export default function Search() {
       setListings(data);
       setLoading(false);
     };
+
     fetchListings();
   }, [location.search]);
 
@@ -86,14 +87,14 @@ export default function Search() {
       setSidebardata({
         ...sidebardata,
         [e.target.id]:
-          e.target.cheked || e.target.checked === "true" ? true : false,
+          e.target.checked || e.target.checked === "true" ? true : false,
       });
     }
 
     if (e.target.id === "sort_order") {
-      const sort = e.target.value.splir("-")[0] || "created_at";
+      const sort = e.target.value.split("_")[0] || "created_at";
 
-      const order = e.target.value.split("-")[1] || "desc";
+      const order = e.target.value.split("_")[1] || "desc";
 
       setSidebardata({ ...sidebardata, sort, order });
     }
@@ -126,11 +127,10 @@ export default function Search() {
     }
     setListings([...listings, ...data]);
   };
-
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
-        <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+      <div className="p-7  border-b-2 md:border-r-2 md:min-h-screen">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">
               Search Term:
@@ -138,7 +138,8 @@ export default function Search() {
             <input
               type="text"
               id="searchTerm"
-              placeholder="border rounded-lg p-3 w-full"
+              placeholder="Search..."
+              className="border rounded-lg p-3 w-full"
               value={sidebardata.searchTerm}
               onChange={handleChange}
             />
@@ -153,7 +154,7 @@ export default function Search() {
                 onChange={handleChange}
                 checked={sidebardata.type === "all"}
               />
-              <span> Rent & Sale</span>
+              <span>Rent & Sale</span>
             </div>
             <div className="flex gap-2">
               <input
@@ -181,7 +182,7 @@ export default function Search() {
                 id="offer"
                 className="w-5"
                 onChange={handleChange}
-                checked={sidebardata.type === "offer"}
+                checked={sidebardata.offer}
               />
               <span>Offer</span>
             </div>
@@ -194,7 +195,7 @@ export default function Search() {
                 id="parking"
                 className="w-5"
                 onChange={handleChange}
-                checked={sidebardata.type === "parking"}
+                checked={sidebardata.parking}
               />
               <span>Parking</span>
             </div>
@@ -204,13 +205,13 @@ export default function Search() {
                 id="furnished"
                 className="w-5"
                 onChange={handleChange}
-                checked={sidebardata.type === "furnished"}
+                checked={sidebardata.furnished}
               />
               <span>Furnished</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <label className="font-semibold">Sort</label>
+            <label className="font-semibold">Sort:</label>
             <select
               onChange={handleChange}
               defaultValue={"created_at_desc"}
@@ -218,9 +219,9 @@ export default function Search() {
               className="border rounded-lg p-3"
             >
               <option value="regularPrice_desc">Price high to low</option>
-              <option value="regularPrice_asc">Price low to high</option>
+              <option value="regularPrice_asc">Price low to hight</option>
               <option value="createdAt_desc">Latest</option>
-              <option value="createdAt_desc">Oldest</option>
+              <option value="createdAt_asc">Oldest</option>
             </select>
           </div>
           <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">
@@ -253,7 +254,7 @@ export default function Search() {
               onClick={onShowMoreClick}
               className="text-green-700 hover:underline p-7 text-center w-full"
             >
-              Show More
+              Show more
             </button>
           )}
         </div>
